@@ -14,13 +14,11 @@ import org.javacord.api.entity.server.Server;
 import org.javacord.api.event.message.MessageCreateEvent;
 import org.javacord.core.entity.channel.PrivateChannelImpl;
 import org.javacord.core.entity.channel.ServerThreadChannelImpl;
-import org.javacord.core.entity.user.MemberImpl;
 import org.javacord.core.entity.user.UserImpl;
 import org.javacord.core.event.message.MessageCreateEventImpl;
 import org.javacord.core.util.event.DispatchQueueSelector;
 import org.javacord.core.util.gateway.PacketHandler;
 import org.javacord.core.util.logging.LoggerUtil;
-
 import java.util.Optional;
 
 /**
@@ -63,7 +61,7 @@ public class MessageCreateHandler extends PacketHandler {
                 }
             }
 
-            UserImpl author = new UserImpl(api, packet.get("author"), (MemberImpl) null, null);
+            UserImpl author = new UserImpl(api, packet.get("author"));
 
             PrivateChannelImpl privateChannel = PrivateChannelImpl
                     .getOrCreatePrivateChannel(api, channelId, author.getId(), author);
@@ -76,7 +74,7 @@ public class MessageCreateHandler extends PacketHandler {
         if (optionalChannel.isPresent()) {
             handle(optionalChannel.get(), packet);
         } else {
-            LoggerUtil.logMissingChannel(logger, channelId);
+            LoggerUtil.logMissingChannel(logger, channelId, packet);
         }
     }
 
