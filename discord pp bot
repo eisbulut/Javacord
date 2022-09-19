@@ -1,0 +1,351 @@
+const Discord = require("discord.js");
+
+exports.run = async (client, message, args) => {
+  const menü = new Discord.MessageSelectMenu()
+    .setCustomId("select")
+    .setPlaceholder("Bir Boyut Seç")
+    .setMinValues(1)
+    .setMaxValues(1)
+    .addOptions([
+      {
+        label: "Silmek için tıkla!",
+        value: "sil",
+        emoji: "❌",
+      },
+      {
+        label: "1024",
+        value: "binyirmidört",
+      },
+      {
+        label: "512",
+        value: "beşyüzoniki",
+      },
+      {
+        label: "256",
+        value: "ikiyüzellialtı",
+      },
+      {
+        label: "128",
+        value: "yüzyirmisekiz",
+      },
+      {
+        label: "64",
+        value: "altmışdört",
+      },
+      {
+        label: "32",
+        value: "otuziki",
+      },
+      {
+        label: "16",
+        value: "onaltı",
+      },
+    ]);
+  // -------------------------- EMBEDLER -------------------------- \\
+  const member = message.mentions.members.first();
+  if (member) {
+    let userId = member.id;
+    client.users
+      .fetch(userId, { cache: false, force: true })
+      .then((kullanici) => {
+        const embed = new Discord.MessageEmbed()
+          .setAuthor({
+            name: `${kullanici.username}'in Avatarı`,
+            iconURL: client.user.avatarURL(),
+          })
+          .setImage(kullanici.avatarURL({ dynamic: true, size: 1024 }))
+          .setFooter({
+            text: `Talep Eden ${message.author.username}`,
+            iconURL: message.author.avatarURL({ dynamic: true }),
+          })
+          .setColor("BLURPLE");
+
+        const embed2 = new Discord.MessageEmbed()
+          .setAuthor({
+            name: `${kullanici.username}'in Avatarı`,
+            iconURL: client.user.avatarURL(),
+          })
+          .setImage(kullanici.avatarURL({ dynamic: true, size: 512 }))
+          .setFooter({
+            text: `Talep Eden ${message.author.username}`,
+            iconURL: message.author.avatarURL({ dynamic: true }),
+          })
+          .setColor("BLURPLE");
+
+        const embed3 = new Discord.MessageEmbed()
+          .setAuthor({
+            name: `${kullanici.username}'in Avatarı`,
+            iconURL: client.user.avatarURL(),
+          })
+          .setImage(kullanici.avatarURL({ dynamic: true, size: 256 }))
+          .setFooter({
+            text: `Talep Eden ${message.author.username}`,
+            iconURL: message.author.avatarURL({ dynamic: true }),
+          })
+          .setColor("BLURPLE");
+
+        const embed4 = new Discord.MessageEmbed()
+          .setAuthor({
+            name: `${kullanici.username}'in Avatarı`,
+            iconURL: client.user.avatarURL(),
+          })
+          .setImage(kullanici.avatarURL({ dynamic: true, size: 128 }))
+          .setFooter({
+            text: `Talep Eden ${message.author.username}`,
+            iconURL: message.author.avatarURL({ dynamic: true }),
+          })
+          .setColor("BLURPLE");
+
+        const embed5 = new Discord.MessageEmbed()
+          .setAuthor({
+            name: `${kullanici.username}'in Avatarı`,
+            iconURL: client.user.avatarURL(),
+          })
+          .setImage(kullanici.avatarURL({ dynamic: true, size: 64 }))
+          .setFooter({
+            text: `Talep Eden ${message.author.username}`,
+            iconURL: message.author.avatarURL({ dynamic: true }),
+          })
+          .setColor("BLURPLE");
+
+        const embed6 = new Discord.MessageEmbed()
+          .setAuthor({
+            name: `${kullanici.username}'in Avatarı`,
+            iconURL: client.user.avatarURL(),
+          })
+          .setImage(kullanici.avatarURL({ dynamic: true, size: 32 }))
+          .setFooter({
+            text: `Talep Eden ${message.author.username}`,
+            iconURL: message.author.avatarURL({ dynamic: true }),
+          })
+          .setColor("BLURPLE");
+
+        const embed7 = new Discord.MessageEmbed()
+          .setAuthor({
+            name: `${kullanici.username}'in Avatarı`,
+            iconURL: client.user.avatarURL(),
+          })
+          .setImage(kullanici.avatarURL({ dynamic: true, size: 16 }))
+          .setFooter({
+            text: `Talep Eden ${message.author.username}`,
+            iconURL: message.author.avatarURL({ dynamic: true }),
+          })
+          .setColor("BLURPLE");
+
+        // -------------------------- EMBEDLER -------------------------- \\
+        const row = new Discord.MessageActionRow().addComponents(menü);
+        message.channel
+          .send({ embeds: [embed], components: [row] })
+          .then(async (msg) => {
+            const filter = (x) => x.user.id === message.author.id;
+            let collector = msg.createMessageComponentCollector({
+              filter,
+              time: 300000,
+            });
+
+            collector.on("collect", async (interaction) => {
+              if (!interaction.isSelectMenu()) return;
+
+              let choice = interaction.values[0];
+
+              if (choice === "binyirmidört") {
+                console.log(
+                  "https://cdn.discordapp.com/avatars/" +
+                    response.data.id +
+                    "/" +
+                    response.data.avatar
+                );
+                msg.edit({ embeds: [embed] });
+              }
+              if (choice === "beşyüzoniki") {
+                console.log(
+                  "https://cdn.discordapp.com/avatars/" +
+                    response.data.id +
+                    "/" +
+                    response.data.avatar
+                );
+
+                msg.edit({ embeds: [embed2] });
+              }
+              if (choice === "ikiyüzellialtı") {
+                msg.edit({ embeds: [embed3] });
+              }
+              if (choice === "yüzyirmisekiz") {
+                msg.edit({ embeds: [embed4] });
+              }
+              if (choice === "altmışdört") {
+                msg.edit({ embeds: [embed5] });
+              }
+              if (choice === "otuziki") {
+                msg.edit({ embeds: [embed6] });
+              }
+              if (choice === "onaltı") {
+                msg.edit({ embeds: [embed7] });
+              }
+              if (choice === "sil") {
+                msg.delete();
+              }
+
+              interaction.deferUpdate();
+            });
+
+            collector.on("end", async (interaction) => {
+              msg.edit({ content: "Button click Timeout" }).catch(() => {});
+            });
+          });
+      })
+      .catch(() => {});
+  } else if (
+    Number(args[0]) ||
+    message.guild.members.cache.get(message.author.id)
+  ) {
+    client.users
+      .fetch(args[0] || message.guild.members.cache.get(message.author.id), {
+        cache: false,
+        force: true,
+      })
+      .then((kullanici) => {
+        const embed = new Discord.MessageEmbed()
+          .setAuthor({
+            name: `${kullanici.username}'in Avatarı`,
+            iconURL: client.user.avatarURL(),
+          })
+          .setImage(kullanici.avatarURL({ dynamic: true, size: 1024 }))
+          .setFooter({
+            text: `Talep Eden ${message.author.username}`,
+            iconURL: message.author.avatarURL({ dynamic: true }),
+          })
+          .setColor("BLURPLE");
+
+        const embed2 = new Discord.MessageEmbed()
+          .setAuthor({
+            name: `${kullanici.username}'in Avatarı`,
+            iconURL: client.user.avatarURL(),
+          })
+          .setImage(kullanici.avatarURL({ dynamic: true, size: 512 }))
+          .setFooter({
+            text: `Talep Eden ${message.author.username}`,
+            iconURL: message.author.avatarURL({ dynamic: true }),
+          })
+          .setColor("BLURPLE");
+
+        const embed3 = new Discord.MessageEmbed()
+          .setAuthor({
+            name: `${kullanici.username}'in Avatarı`,
+            iconURL: client.user.avatarURL(),
+          })
+          .setImage(kullanici.avatarURL({ dynamic: true, size: 256 }))
+          .setFooter({
+            text: `Talep Eden ${message.author.username}`,
+            iconURL: message.author.avatarURL({ dynamic: true }),
+          })
+          .setColor("BLURPLE");
+
+        const embed4 = new Discord.MessageEmbed()
+          .setAuthor({
+            name: `${kullanici.username}'in Avatarı`,
+            iconURL: client.user.avatarURL(),
+          })
+          .setImage(kullanici.avatarURL({ dynamic: true, size: 128 }))
+          .setFooter({
+            text: `Talep Eden ${message.author.username}`,
+            iconURL: message.author.avatarURL({ dynamic: true }),
+          })
+          .setColor("BLURPLE");
+
+        const embed5 = new Discord.MessageEmbed()
+          .setAuthor({
+            name: `${kullanici.username}'in Avatarı`,
+            iconURL: client.user.avatarURL(),
+          })
+          .setImage(kullanici.avatarURL({ dynamic: true, size: 64 }))
+          .setFooter({
+            text: `Talep Eden ${message.author.username}`,
+            iconURL: message.author.avatarURL({ dynamic: true }),
+          })
+          .setColor("BLURPLE");
+
+        const embed6 = new Discord.MessageEmbed()
+          .setAuthor({
+            name: `${kullanici.username}'in Avatarı`,
+            iconURL: client.user.avatarURL(),
+          })
+          .setImage(kullanici.avatarURL({ dynamic: true, size: 32 }))
+          .setFooter({
+            text: `Talep Eden ${message.author.username}`,
+            iconURL: message.author.avatarURL({ dynamic: true }),
+          })
+          .setColor("BLURPLE");
+
+        const embed7 = new Discord.MessageEmbed()
+          .setAuthor({
+            name: `${kullanici.username}'in Avatarı`,
+            iconURL: client.user.avatarURL(),
+          })
+          .setImage(kullanici.avatarURL({ dynamic: true, size: 16 }))
+          .setFooter({
+            text: `Talep Eden ${message.author.username}`,
+            iconURL: message.author.avatarURL({ dynamic: true }),
+          })
+          .setColor("BLURPLE");
+
+        // -------------------------- EMBEDLER -------------------------- \\
+        const row = new Discord.MessageActionRow().addComponents(menü);
+        message.channel
+          .send({ embeds: [embed], components: [row] })
+          .then(async (msg) => {
+            const filter = (x) => x.user.id === message.author.id;
+            let collector = msg.createMessageComponentCollector({
+              filter,
+              time: 300000,
+            });
+
+            collector.on("collect", async (interaction) => {
+              if (!interaction.isSelectMenu()) return;
+
+              let choice = interaction.values[0];
+
+              if (choice === "binyirmidört") {
+                msg.edit({ embeds: [embed] });
+              }
+              if (choice === "beşyüzoniki") {
+                msg.edit({ embeds: [embed2] });
+              }
+              if (choice === "ikiyüzellialtı") {
+                msg.edit({ embeds: [embed3] });
+              }
+              if (choice === "yüzyirmisekiz") {
+                msg.edit({ embeds: [embed4] });
+              }
+              if (choice === "altmışdört") {
+                msg.edit({ embeds: [embed5] });
+              }
+              if (choice === "otuziki") {
+                msg.edit({ embeds: [embed6] });
+              }
+              if (choice === "onaltı") {
+                msg.edit({ embeds: [embed7] });
+              }
+              if (choice === "sil") {
+                msg.delete();
+              }
+
+              interaction.deferUpdate();
+            });
+
+            collector.on("end", async (interaction) => {
+              msg.edit({ content: "Button click Timeout" }).catch(() => {});
+            });
+          });
+      })
+      .catch(() => {});
+  }
+};
+
+exports.conf = {
+  aliases: [],
+};
+
+exports.help = {
+  name: "avatar",
+};
